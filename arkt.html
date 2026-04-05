@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Арки Жуковского | Исторический маршрут</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, 'Segoe UI', 'Roboto', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f5f2e8 0%, #e8e0d3 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+            background: rgba(255, 248, 235, 0.95);
+            border-radius: 48px;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,215,170,0.4);
+            overflow: hidden;
+            backdrop-filter: blur(2px);
+        }
+
+        .hero {
+            background: #2d2a24;
+            padding: 32px 24px;
+            text-align: center;
+            color: #ffecb3;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            letter-spacing: -0.5px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            opacity: 0.8;
+            margin-top: 8px;
+        }
+
+        .qr-simulator {
+            background: white;
+            margin: 24px;
+            padding: 20px;
+            border-radius: 36px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            text-align: center;
+            border: 1px solid #e0cba0;
+        }
+
+        .qr-badge {
+            font-size: 3.5rem;
+            background: #1e1b16;
+            display: inline-block;
+            padding: 12px 20px;
+            border-radius: 60px;
+            color: #ffd966;
+            margin-bottom: 16px;
+        }
+
+        input {
+            width: 85%;
+            padding: 16px;
+            font-size: 1.2rem;
+            text-align: center;
+            border: 2px solid #cfb87c;
+            border-radius: 44px;
+            background: #fffaf2;
+            font-weight: 500;
+            margin: 8px 0;
+        }
+
+        button {
+            background: #b97f44;
+            border: none;
+            padding: 14px 28px;
+            margin: 8px 6px;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 1rem;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        button:hover {
+            background: #9b6234;
+            transform: scale(0.97);
+        }
+
+        .card {
+            background: #fef7e9;
+            margin: 20px 24px;
+            padding: 24px;
+            border-radius: 40px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-left: 12px solid #b97f44;
+        }
+
+        .fact-item {
+            margin: 16px 0;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed #edd7b0;
+        }
+
+        .fact-label {
+            font-weight: 800;
+            color: #6b3e1c;
+            display: block;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        .fact-text {
+            font-size: 1.1rem;
+            margin-top: 5px;
+            color: #2c241a;
+        }
+
+        .legend {
+            background: #f2e2ca;
+            padding: 18px;
+            border-radius: 28px;
+            margin-top: 16px;
+            font-style: italic;
+        }
+
+        .photo-place {
+            background: #d9c7aa;
+            height: 140px;
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 18px 0;
+            color: #4a3722;
+            font-weight: 500;
+            background-image: url('https://placehold.co/600x400/bba882/fff?text=Архивное+фото');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .route-btn {
+            background: #2c5f2d;
+            width: 100%;
+            font-size: 1.2rem;
+            padding: 16px;
+            margin-top: 12px;
+        }
+
+        .progress {
+            background: #e4d6c0;
+            margin: 12px 24px 24px;
+            border-radius: 60px;
+            padding: 10px 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.75rem;
+            padding: 20px;
+            color: #4e3e2c;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1>🏛️ АРКИ ЖУКОВСКОГО</h1>
+        <p>Туристический маршрут • 12 исторических арок</p>
+    </div>
+
+    <div class="qr-simulator">
+        <div class="qr-badge">📱 🧭</div>
+        <p><strong>Наведи камеру на QR-код</strong> или введи номер арки:</p>
+        <input type="number" id="archNumber" placeholder="Например: 1" min="1" max="12">
+        <div>
+            <button id="scanBtn">🔍 ПОКАЗАТЬ ФАКТЫ</button>
+            <button id="resetBtn">⟳ Сброс маршрута</button>
+        </div>
+        <small style="display:block; margin-top:10px;">⚡ QR-коды висят на каждой арке в городе</small>
+    </div>
+
+    <div id="contentArea">
+        <!-- Динамический контент появится тут -->
+    </div>
+    <footer>
+        * Легенды собраны краеведами. Проект на гранд — оживляем историю города.
+    </footer>
+</div>
+
+<script>
+    // ----- БАЗА ДАННЫХ: 12 АРОК (Жуковский 5 - это арка №1) -----
+    const arches = [
+        { // Арка №1
+            id: 1,
+            name: "Арка у дома №5 (Жуковского)",
+            construction: "Построена в 1953 году по проекту архитектора М.И. Линецкого. Изначально служила парадным въездом во дворец культуры авиастроителей.",
+            builder: "Строительная артель «Стальмост» при участии пленных немецких инженеров (восстановление после войны).",
+            pilot: "Лётчик-испытатель Григорий Бахчиванджи — жил в этом доме в 1941–1943 гг., первым поднял в небо реактивный самолёт БИ-1.",
+            legend: "Говорят, что под аркой №1 зарыта капсула с чертежами первого советского турбореактивного двигателя. По ночам здесь слышен звук пролетающего МиГ-15.",
+            photoUrl: "https://placehold.co/600x400/8b6946/fff?text=Арка+№1+Жуковский+5",
+            nextLat: 55.603, nextLon: 38.118,   // координаты следующей арки (пример)
+            nextName: "Арка №2 — Гагарина 12"
+        },
+        { // Арка №2 (пример)
+            id: 2,
+            name: "Арка у дома Гагарина 12",
+            construction: "Возведена в 1961 году в честь первого полёта человека в космос. Фасад украшен звёздами.",
+            builder: "Строительное управление №5 Жуковского. Бригада М. Смирнова.",
+            pilot: "Космонавт №1 Юрий Гагарин бывал здесь на встречах с трудящимися.",
+            legend: "Легенда: под аркой встречались две разведшколы — местная и американская, но так никто и не узнал детали.",
+            photoUrl: "https://placehold.co/600x400/8b6946/fff?text=Арка+№2",
+            nextLat: 55.610, nextLon: 38.125, nextName: "Арка №3 — Молодёжная 7"
+        }
+    ];
+
+    // Дополним до 12 арок шаблонными (но вам легко заменить своими фактами)
+    for(let i=3; i<=12; i++) {
+        arches.push({
+            id: i,
+            name: `Арка №${i} — исторический перекрёсток`,
+            construction: `Построена в конце 1950-х. Типовая арка сталинского ампира, восстановлена в 2015.`,
+            builder: `Горстройтрест №${i-1} и ЖСК «Лётчик».`,
+            pilot: `Испытатель ${i===3 ? 'Сергей Анохин' : (i===4 ? 'Марк Галлай' : 'Владимир Ильюшин')} жил неподалёку.`,
+            legend: `Местная легенда: если пройти под аркой 3 раза в полночь, услышишь рокот поршневого мотора.`,
+            photoUrl: `https://placehold.co/600x400/aa8b62/fff?text=Арка+№${i}`,
+            nextLat: 55.6 + i*0.005, nextLon: 38.11 + i*0.004, nextName: `Арка №${i+1}`
+        });
+    }
+    // последняя арка ссылается на первую
+    arches[11].nextName = "Маршрут завершён! Вернись к арке №1";
+
+    // --- Хранилище прогресса: какие арки пройдены ---
+    let completedArches = JSON.parse(localStorage.getItem("archQuest_completed")) || [];
+    let currentArchId = null;
+
+    function saveProgress() {
+        localStorage.setItem("archQuest_completed", JSON.stringify(completedArches));
+    }
+
+    function markCompleted(id) {
+        if(!completedArches.includes(id)) {
+            completedArches.push(id);
+            saveProgress();
+        }
+    }
+
+    function renderArch(archId) {
+        const arch = arches.find(a => a.id === archId);
+        if(!arch) {
+            document.getElementById("contentArea").innerHTML = `<div class="card" style="color:red;">❌ Арка с номером ${archId} не найдена. Введите число от 1 до 12.</div>`;
+            return;
+        }
+        // Отмечаем пройденной
+        markCompleted(arch.id);
+        currentArchId = arch.id;
+
+        // Находим следующую арку
+        let nextArch = arches.find(a => a.id === arch.id + 1);
+        if(!nextArch && arch.id === 12) nextArch = arches[0]; // зациклим маршрут
+
+        let nextText = "🏁 Завершили весь маршрут!";
+        let routeLink = "#";
+        if(nextArch) {
+            nextText = `🚶 Далее: ${nextArch.name}`;
+            // строим ссылку на навигатор (Яндекс.Карты)
+            routeLink = `https://yandex.ru/maps/?rtext=~${arch.nextLat},${arch.nextLon}&rtt=auto`;
+        }
+
+        const completedCount = completedArches.length;
+        const total = arches.length;
+
+        const html = `
+            <div class="card">
+                <div class="photo-place" style="background-image: url('${arch.photoUrl}'); background-size:cover;">📸 ${arch.name}</div>
+                
+                <div class="fact-item">
+                    <span class="fact-label">🏗️ СТРОИТЕЛЬСТВО</span>
+                    <div class="fact-text">${arch.construction}</div>
+                </div>
+                <div class="fact-item">
+                    <span class="fact-label">👷 КТО СТРОИЛ</span>
+                    <div class="fact-text">${arch.builder}</div>
+                </div>
+                <div class="fact-item">
+                    <span class="fact-label">✈️ ЛЁТЧИК-ИСПЫТАТЕЛЬ</span>
+                    <div class="fact-text">${arch.pilot}</div>
+                </div>
+                <div class="legend">
+                    📜 <strong>Легенда арки:</strong> ${arch.legend}
+                </div>
+                <button class="route-btn" id="getRouteBtn">🗺️ ${nextText}</button>
+            </div>
+            <div class="progress">
+                🧭 Ваш прогресс: ${completedCount} из ${total} арок открыто<br>
+                ${completedCount === total ? '✨ ПОЗДРАВЛЯЕМ! Вы прошли весь исторический маршрут ✨' : 'Продолжайте сканировать QR-коды на арках!'}
+            </div>
+        `;
+
+        document.getElementById("contentArea").innerHTML = html;
+
+        // обработчик кнопки маршрута
+        const routeBtn = document.getElementById("getRouteBtn");
+        if(routeBtn && nextArch) {
+            routeBtn.addEventListener("click", () => {
+                window.open(routeLink, '_blank');
+            });
+        } else if(routeBtn && !nextArch) {
+            routeBtn.addEventListener("click", () => {
+                alert("Маршрут завершён! Спасибо, что прошли все 12 арок!");
+            });
+        }
+    }
+
+    // сканирование по номеру
+    function scanArch() {
+        let val = document.getElementById("archNumber").value;
+        let num = parseInt(val);
+        if(isNaN(num) || num < 1 || num > 12) {
+            alert("Введите номер арки от 1 до 12 (на Жуковского 5 — арка №1)");
+            return;
+        }
+        renderArch(num);
+    }
+
+    // сброс прогресса
+    function resetProgress() {
+        completedArches = [];
+        saveProgress();
+        currentArchId = null;
+        document.getElementById("contentArea").innerHTML = `<div class="card">🗑️ Прогрес сброшен. Начните маршрут заново с QR-кода на арке №1 (Жуковского 5).</div>`;
+        document.getElementById("archNumber").value = "";
+    }
+
+    // события
+    document.getElementById("scanBtn").addEventListener("click", scanArch);
+    document.getElementById("resetBtn").addEventListener("click", resetProgress);
+    // по нажатию Enter в поле ввода
+    document.getElementById("archNumber").addEventListener("keypress", (e) => {
+        if(e.key === "Enter") scanArch();
+    });
+
+    // Приветственный экран
+    if(completedArches.length === 0) {
+        document.getElementById("contentArea").innerHTML = `<div class="card">🏆 Добро пожаловать в исторический квест «Арки Жуковского»!<br><br>📍 Стартовая точка: <strong>Жуковского 5, арка №1</strong><br>Наведите камеру на QR-код или введите 1 в поле выше, чтобы получить первые факты о строительстве, лётчике и легенду.</div>`;
+    } else {
+        // если уже что-то пройдено — покажем последнюю посещённую или первую непройденную
+        const lastCompleted = completedArches[completedArches.length-1];
+        if(lastCompleted) renderArch(lastCompleted);
+        else renderArch(1);
+    }
+</script>
+</body>
+</html>
